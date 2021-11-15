@@ -1,0 +1,23 @@
+# Namespace for istio-system
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+---
+# BackendConfig with Cloud Armor Policy
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: my-backendconfig
+  namespace: istio-system
+spec:
+  healthCheck:
+    requestPath: /healthz/ready
+    port: 15021
+    type: HTTP
+  timeoutSec: 40
+  connectionDraining:
+    drainingTimeoutSec: 60
+  securityPolicy:
+    name: my-cloud-armor-policy
+---
